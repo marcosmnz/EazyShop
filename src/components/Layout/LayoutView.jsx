@@ -1,8 +1,9 @@
 import "bulma/css/bulma.min.css";
+import { Link } from "react-router-dom";
 import { useGlobalContext } from './../../Context/ContextGlobal'
 // eslint-disable-next-line react/prop-types
 export default function LayoutView({ children }) {
-  const { productos, state } = useGlobalContext()
+  const { state } = useGlobalContext()
 
   return (
     <>
@@ -39,12 +40,12 @@ export default function LayoutView({ children }) {
               <a className="navbar-link">Category</a>
 
               <div className="navbar-dropdown">
-                <a href="/category/jewelery" className="navbar-item">Jewelry</a>
-                <a className="navbar-item">Men's Clothing</a>
-                <a className="navbar-item">Women's Clothing</a>
-                <a href="/category/electronics" className="navbar-item">Electronics</a>
+                <Link to="/category/jewelery" className="navbar-item">Jewelry</Link>
+                <Link to="/category/men's clothing" className="navbar-item">Men's Clothing</Link>
+                <Link to="/category/women's clothing" className="navbar-item">Women's Clothing</Link>
+                <Link to="/category/electronics" className="navbar-item">Electronics</Link>
                 <hr className="navbar-divider"></hr>
-                <a href="/issues" className="navbar-item">Report an issue</a>
+                <Link to="/issues" className="navbar-item">Report an issue</Link>
               </div>
             </div>
           </div>
@@ -52,10 +53,10 @@ export default function LayoutView({ children }) {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <a href="cart" className="button is-rounded is-light">
+                <Link to="/cart" className="button is-rounded is-light">
                 <div className="mr-3">{state.products.length}</div>
                   <i className="fa-solid fa-cart-shopping"></i>
-                </a>
+                </Link>
                 <a className="button is-link">
                   <strong>Sign up</strong>
                 </a>

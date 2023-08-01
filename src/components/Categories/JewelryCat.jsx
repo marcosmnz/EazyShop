@@ -1,9 +1,12 @@
 import DashboardView from '../Dashboard/DashboardView'
 import useSWR from '../../hooks/useSWR'
+import { useParams } from 'react-router-dom'
 const API_URL = import.meta.env.VITE_API_URL
 
 function DashboardJewelery() {
-  const { data: productData, loading, error } = useSWR({ url: `${API_URL}/products/category/jewelery` })
+  const params = useParams()
+  console.log(params)
+  const { data: productData, loading, error } = useSWR({ url: `${API_URL}/products/category/${params.category}` })
 
 
   return (

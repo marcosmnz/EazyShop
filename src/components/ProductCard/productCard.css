@@ -2,3 +2,6 @@
     transition: all ease .5s;
     transform: scale(1.06);
 }
+.card-container {
+    text-overflow: ellipsis;
+}

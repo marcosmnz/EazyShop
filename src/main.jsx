@@ -1,66 +1,89 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from './App.jsx'
-import LayoutView from './components/Layout/LayoutView.jsx'
-import './index.css'
-import ErrorPage from './View/ErrorPage'
-import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx'
-import ProductDetail from './components/ProductDetail/index.jsx'
-import CartPage from './View/CartPage.jsx'
-import Login from './View/Login/index'
-import DashboardJewelery from './components/Categories/JewelryCat.jsx'
-import DashboardElectronics from './components/Categories/ElectronicsCar.jsx'
-import ContextGlobalProvider from './Context/ContextGlobal'
-import Reports from './View/Reports.jsx'
-
-
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import App from "./App.jsx";
+import LayoutView from "./components/Layout/LayoutView.jsx";
+import "./index.css";
+import ErrorPage from "./View/ErrorPage";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
+import ProductDetail from "./components/ProductDetail/index.jsx";
+import CartPage from "./View/CartPage.jsx";
+import Login from "./View/Login/index";
+import DashboardJewelery from "./components/Categories/JewelryCat.jsx";
+import ContextGlobalProvider from "./Context/ContextGlobal";
+import Reports from "./View/Reports.jsx";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
+    element: (
+      <LayoutView>
+        <App />
+      </LayoutView>
+    ),
+    errorElement: (
+      <LayoutView>
+        <ErrorPage />
+      </LayoutView>
+    ),
+  },
+  {
+    path: "home",
     element: <App />,
-    errorElement: <ErrorPage />
+    errorElement: (
+      <LayoutView>
+        <ErrorPage />
+      </LayoutView>
+    ),
   },
   {
-    path: '/home',
-    element: <App />,
-    errorElement: <ErrorPage />
+    path: "/product/:id/:name",
+    element: (
+      <LayoutView>
+        <ProductDetail />,
+      </LayoutView>
+    ),
   },
   {
-    path: '/product/:id/:name',
-    element: <ProductDetail/>
+    path: "cart",
+    element: (
+      <PrivateRoute>
+        <LayoutView>
+        <CartPage />
+        </LayoutView>
+      </PrivateRoute>
+    ),
   },
   {
-    path: '/cart',
-    element:
-    <PrivateRoute>
-      <CartPage />
-    </PrivateRoute>
+    path: "/login",
+    element: (
+    <LayoutView>
+      <Login />
+    </LayoutView>
+    ),
   },
   {
-    path: '/login',
-    element: <Login/>
-  }, {
-    path: '/category/jewelery',
-    element: <DashboardJewelery/>
+    path: "category/:category",
+    element: (
+      <LayoutView>
+        <DashboardJewelery />
+      </LayoutView>
+    ),
   },
   {
-    path: '/category/electronics',
-    element: <DashboardElectronics/>
+    path: "/issues",
+    element: (
+      <LayoutView>
+        <Reports />
+      </LayoutView>
+    ),
   },
-  {
-    path:'/issues',
-    element: <Reports/>
-  }
-])
+]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ContextGlobalProvider>
-    <LayoutView>
-      <RouterProvider router={router}/>
-    </LayoutView>
+      <RouterProvider router={router} />
     </ContextGlobalProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
