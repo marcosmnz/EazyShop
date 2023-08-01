@@ -1,0 +1,4 @@
+.set-hover:hover {
+    transition: all ease .5s;
+    transform: scale(1.06);
+}
