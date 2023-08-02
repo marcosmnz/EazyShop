@@ -1,24 +1,37 @@
+/* eslint-disable react/prop-types */
 import "bulma/css/bulma.min.css";
 import { Link, useLocation } from "react-router-dom";
 import "./productCard.css";
-import { useGlobalContext } from "../../Context/ContextGlobal"
-
+import { useGlobalContext } from "../../Context/ContextGlobal";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 // eslint-disable-next-line react/prop-types
 function ProductCard({ productData }) {
-  const location = useLocation()
-  const {addProduct, removeProduct} = useGlobalContext()
-  console.log(location)
-  const { title, image, description, price } = productData || {};
+  const location = useLocation();
+  const { addProduct, removeProduct } = useGlobalContext();
+  const { title, image, description, price, cantidad } = productData || {};
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="card-container column is-3">
         {/* eslint-disable-next-line react/prop-types */}
         <div className="card set-hover">
-        <Link
-          to={`/product/${productData.id}/${productData.title}`}
-          state={{ productData }}
-        >
+          <Link
+            to={`/product/${productData.id}/${productData.title}`}
+            state={{ productData }}
+          >
             <div className="card-image">
               <figure className="image is-square">
                 <img src={image} alt="Placeholder image"></img>
@@ -26,14 +39,13 @@ function ProductCard({ productData }) {
             </div>
           </Link>
 
-
-            <div className="card-content">
-              <div className="media">
-                <div className="media-content">
-                  <p className="title is-4">{title}</p>
-                </div>
+          <div className="card-content">
+            <div className="media">
+              <div className="media-content">
+                <p className="title is-4">{title}</p>
               </div>
-
+            </div>
+            {location.pathname !== "/cart" ? (
               <div className="content">
                 {description}
                 <br></br>
@@ -44,19 +56,52 @@ function ProductCard({ productData }) {
                   </div>
                   <div className="column is-half">
                     {location.pathname !== "/cart" ? (
-                      <button onClick={() => addProduct(productData)} className="button is-warning">
-                        <i className="fa-solid fa-cart-arrow-down"></i>Add to
-                        cart
+                      <button
+                        onClick={() => addProduct(productData)}
+                        className="button is-warning"
+                      >
+                        <i className="fa-solid fa-cart-shopping"></i>Add to cart
                       </button>
-                    ) : <button onClick={() => removeProduct(productData)} className="button is-danger">
-                    <i className="fa-solid fa-cart-arrow-down"></i>Remove
-                    item
-                  </button>}
+                    ) : (
+                      <button
+                        onClick={() => removeProduct(productData.id)}
+                        className="button is-danger"
+                      >
+                        <i className="fa-regular fa-trash-can"></i>Remove item
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="columns">
+                <div className=" column is-auto is-flex is-justify-content-center is-align-items-center">
+                  Quantity: {cantidad}
+                </div>
+                <div className="column is-auto is-flex is-justify-content-center is-align-items-center">
+                  <strong>${price}</strong>
+                </div>
+                <div className="column is-auto">
+                  {location.pathname !== "/cart" ? (
+                    <button
+                      onClick={() => addProduct(productData)}
+                      className="button is-warning"
+                    >
+                      <i className="fa-solid fa-cart-arrow-down"></i>Add to cart
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => removeProduct(productData.id)}
+                      className="button is-danger"
+                    >
+                      <i className="mr-2 fa-regular fa-trash-can"></i>Remove item
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
+        </div>
       </div>
     </>
   );

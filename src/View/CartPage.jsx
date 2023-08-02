@@ -13,6 +13,7 @@ function CartPage() {
         })
       }
       </div>
+      <div className="is-size-4">TOTAL AMOUNTED</div>
     </>
   )
 }

@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
 // API CONTEXT + REDUCER = redux
 // LAS ACCIONES
 // funciones asyncronas
+import { ToastContainer, toast } from 'react-toastify';
+
 import {
     createContext,
     useContext,
@@ -29,19 +33,36 @@ import {
     // type => que es lo que quiero hacer con el contexto global
     // payload => nuevo objeto
     if (action.type === 'ADD_PRODUCT') {
-      /// AÑADIR EL PRODUCTO AL PRODUCTO QUE SE ENCUENTRA EN EL ESTADO
-      return {
-        ...state,
-        products: [...state.products, action.payload]
-      }
+
+      const existingProduct = state.products.find(product => product.id === action.payload.id);
+
+      if (existingProduct) {
+        // Si el producto ya está en el carrito, aumentar la cantidad en 1
+        const updatedProducts = state.products.map(product =>
+          product.id === action.payload.id ? { ...product, cantidad: product.cantidad + 1 } : product
+        );
+        return {
+          ...state,
+          products: updatedProducts,
+        };
+      } else {
+        // Si el producto no está en el carrito, agregarlo con cantidad inicial de 1
+        const newProduct = { ...action.payload, cantidad: 1 };
+        return {
+          ...state,
+          products: [...state.products, newProduct],
+        };}
     }
   
     if (action.type === 'REMOVE_PRODUCT') {
       // TODO: TAREA => SACAR EL OBJETO POR ID
-      state.products.pop()
+      const productIdToRemove = action.payload;
+      // Filter out the product with the given ID from the products array
+      const updatedProducts = state.products.filter(product => product.id !== productIdToRemove);
       return {
-        ...state
-      }
+        ...state,
+        products: updatedProducts,
+      };
     }
   
     if (action.type === 'SAVE_PRODUCTOS') {
@@ -81,10 +102,7 @@ import {
     // CUARTO paso = LA IMPLEMENTACION
     // ♻️ COMO TERCER PARAMETRO LE PASAMOS UNA FUNCION QUE RECUPERA EL ESTADO DE LOCAL STORAGE
     const [state, dispatch] = useReducer(reducer, initialStore, loadStateFromLocalStorage)
-    // REDUX =>
-    // ZUSTAD =>
   
-    // TODO: crear un estado persistente // guardar los datos para cuando cambiamos de pagina o cerramos el navegador
     // PASO 1 ♻️ => EJECUTAMOS UN USEEFFECT PARA ESCUCHAR CADA VEZ QUE EL DISPATCH, ACTUALICE EL ESTADO
     useEffect(() => {
       // PASO DOS ♻️ => OCUPAMOS UNA FUNCION QUE PERMITA GUARDA EL ESTADO EN LOCALSTORAGE
@@ -93,15 +111,36 @@ import {
   
     // BUENA PRACTICA QUE LAS FUNCIONES ESTEN DENTRO DEL MISMO ESTADO
     const addProduct = (producto) => {
+      toast('🦄 Se agregó al carrito!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       dispatch({
         type: 'ADD_PRODUCT',
         payload: producto
       })
     }
   
-    const removeProduct = (producto) => {
+    const removeProduct = (id) => {
+      toast('🫡 Se eliminó del carrito!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       dispatch({
-        type: 'REMOVE_PRODUCT'
+        type: 'REMOVE_PRODUCT',
+        payload: id
       })
     }
   

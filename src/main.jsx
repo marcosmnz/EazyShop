@@ -29,7 +29,11 @@ const router = createBrowserRouter([
   },
   {
     path: "home",
-    element: <App />,
+    element: (
+      <LayoutView>
+        <App />
+      </LayoutView>
+    ),
     errorElement: (
       <LayoutView>
         <ErrorPage />
@@ -49,7 +53,7 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <LayoutView>
-        <CartPage />
+          <CartPage />
         </LayoutView>
       </PrivateRoute>
     ),
@@ -57,9 +61,9 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: (
-    <LayoutView>
-      <Login />
-    </LayoutView>
+      <LayoutView>
+        <Login />
+      </LayoutView>
     ),
   },
   {

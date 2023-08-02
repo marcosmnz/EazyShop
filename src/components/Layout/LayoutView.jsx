@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import "bulma/css/bulma.min.css";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from './../../Context/ContextGlobal'
