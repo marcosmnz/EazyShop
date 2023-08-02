@@ -1,10 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
-// API CONTEXT + REDUCER = redux
-// LAS ACCIONES
-// funciones asyncronas
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import {
     createContext,
@@ -12,32 +9,23 @@ import {
     useEffect,
     useReducer
   } from 'react'
-  
-  // primero paso y el por que necesitamos un reducer
-  // importamos el useReducer // va transforma el estado // no ayudara a no mutar el estado, escalar de forma mas comoda el contexto
-  // cuando tenemos muchas acciones
-  // almancen de todas las funciones importantes, login, guardo bd, localstorage, abrir modals.
-  
-  // segundo paso creamos un store inicial
+
   const initialStore = {
     products: [],
+    totalAmounted: 0,
     carritoModal: false,
     guardados: [],
     darkmode: false,
     loading: false
   }
   
-  // tercer paso crear el reducer // actiones que nos permitiran cambiar o modificar el estado inicial
+
   const reducer = (state, action) => {
-    // accion con dos tipos de acciones
-    // type => que es lo que quiero hacer con el contexto global
-    // payload => nuevo objeto
     if (action.type === 'ADD_PRODUCT') {
 
       const existingProduct = state.products.find(product => product.id === action.payload.id);
 
       if (existingProduct) {
-        // Si el producto ya está en el carrito, aumentar la cantidad en 1
         const updatedProducts = state.products.map(product =>
           product.id === action.payload.id ? { ...product, cantidad: product.cantidad + 1 } : product
         );
@@ -46,7 +34,6 @@ import {
           products: updatedProducts,
         };
       } else {
-        // Si el producto no está en el carrito, agregarlo con cantidad inicial de 1
         const newProduct = { ...action.payload, cantidad: 1 };
         return {
           ...state,
@@ -55,13 +42,16 @@ import {
     }
   
     if (action.type === 'REMOVE_PRODUCT') {
-      // TODO: TAREA => SACAR EL OBJETO POR ID
-      const productIdToRemove = action.payload;
-      // Filter out the product with the given ID from the products array
-      const updatedProducts = state.products.filter(product => product.id !== productIdToRemove);
+      const productIdToRemoveQuantity = action.payload;
+      const updatedProductsAfterRemove = state.products.map(product =>
+        product.id === productIdToRemoveQuantity
+          ? { ...product, cantidad: Math.max(0, product.cantidad - 1) }
+          : product
+      );
+      const updatedProductsFiltered = updatedProductsAfterRemove.filter(product => product.cantidad > 0);
       return {
         ...state,
-        products: updatedProducts,
+        products: updatedProductsFiltered,
       };
     }
   
@@ -71,23 +61,31 @@ import {
         guardados: [...state.guardados, action.payload]
       }
     }
-    // acciones de la tienda
-    // Añadir productos al carrito
-    // Borrar productos del carrito
-    // Borrar todo el carrito
-    //
-    // if (action.type)
+
+    if (action.type === 'CALCULATE_TOTAL_PRICE'){
+      const totalPrice = state.products.reduce((total, product) => {
+        return total + product.price * product.cantidad;
+      }, 0);
+      return {
+        ...state,
+        totalAmounted: totalPrice,
+      };
+    }
+
+    if(action.type === 'DELETE_ALL_PRODUCTS') {
+      return {
+        ...state,
+        products: [],
+      };
+    }
   }
   
-  // 🤖🤖🧠🧠🧠
+
   const saveStateToLocalStorage = (state) => {
     const stringState = JSON.stringify(state)
-    // con el id del usuario
     localStorage.setItem('cart', stringState)
   }
   
-  // 🤖🤖🧠🧠🧠
-  // recuperar el estado previo en localStorage
   const loadStateFromLocalStorage = () => {
     const prevCart = localStorage.getItem('cart')
     if (prevCart === null) return initialStore
@@ -97,21 +95,18 @@ import {
   // CREAR EL CONTEXTO
   const context = createContext()
   const Provider = context.Provider
+
   const ContextGlobalProvider = ({ children }) => {
-    // compra => STRIPE // MERCADO PAGO // PAYPAL
-    // CUARTO paso = LA IMPLEMENTACION
-    // ♻️ COMO TERCER PARAMETRO LE PASAMOS UNA FUNCION QUE RECUPERA EL ESTADO DE LOCAL STORAGE
+    
     const [state, dispatch] = useReducer(reducer, initialStore, loadStateFromLocalStorage)
   
-    // PASO 1 ♻️ => EJECUTAMOS UN USEEFFECT PARA ESCUCHAR CADA VEZ QUE EL DISPATCH, ACTUALICE EL ESTADO
+
     useEffect(() => {
-      // PASO DOS ♻️ => OCUPAMOS UNA FUNCION QUE PERMITA GUARDA EL ESTADO EN LOCALSTORAGE
       saveStateToLocalStorage(state)
     }, [state])
   
-    // BUENA PRACTICA QUE LAS FUNCIONES ESTEN DENTRO DEL MISMO ESTADO
     const addProduct = (producto) => {
-      toast('🦄 Se agregó al carrito!', {
+      toast.success('😮‍💨 Se agregó al carrito!', {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -120,15 +115,19 @@ import {
         draggable: true,
         progress: undefined,
         theme: "light",
+        toastId: producto.id
         });
       dispatch({
         type: 'ADD_PRODUCT',
         payload: producto
       })
+      dispatch({
+        type: 'CALCULATE_TOTAL_PRICE',
+      });
     }
   
     const removeProduct = (id) => {
-      toast('🫡 Se eliminó del carrito!', {
+      toast.error('🫡 Se eliminó del carrito!', {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -142,12 +141,21 @@ import {
         type: 'REMOVE_PRODUCT',
         payload: id
       })
+      dispatch({
+        type: 'CALCULATE_TOTAL_PRICE',
+      });
     }
+    const deleteAllProducts = () => {
+      dispatch({
+        type: 'DELETE_ALL_PRODUCTS',
+      });
+    };
   
     return (
       <Provider value={{
         addProduct,
         removeProduct,
+        deleteAllProducts,
         state
       }}>
           { children }

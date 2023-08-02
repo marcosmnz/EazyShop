@@ -16,6 +16,7 @@ function ProductCard({ productData }) {
       <ToastContainer
         position="top-right"
         autoClose={5000}
+        limit={2}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -25,27 +26,27 @@ function ProductCard({ productData }) {
         pauseOnHover
         theme="light"
       />
-      <div className="card-container column is-3">
-        {/* eslint-disable-next-line react/prop-types */}
-        <div className="card set-hover">
-          <Link
-            to={`/product/${productData.id}/${productData.title}`}
-            state={{ productData }}
-          >
-            <div className="card-image">
-              <figure className="image is-square">
-                <img src={image} alt="Placeholder image"></img>
-              </figure>
-            </div>
-          </Link>
-
-          <div className="card-content">
-            <div className="media">
-              <div className="media-content">
-                <p className="title is-4">{title}</p>
+      {location.pathname !== "/cart" ? (
+        <div className="card-container column is-3">
+          {/* eslint-disable-next-line react/prop-types */}
+          <div className="card set-hover">
+            <Link
+              to={`/product/${productData.id}/${productData.title}`}
+              state={{ productData }}
+            >
+              <div className="card-image">
+                <figure className="image is-square">
+                  <img src={image} alt="Placeholder image"></img>
+                </figure>
               </div>
-            </div>
-            {location.pathname !== "/cart" ? (
+            </Link>
+
+            <div className="card-content">
+              <div className="media">
+                <div className="media-content">
+                  <p className="title is-4">{title}</p>
+                </div>
+              </div>
               <div className="content">
                 {description}
                 <br></br>
@@ -55,25 +56,39 @@ function ProductCard({ productData }) {
                     <strong>${price}</strong>
                   </div>
                   <div className="column is-half">
-                    {location.pathname !== "/cart" ? (
-                      <button
-                        onClick={() => addProduct(productData)}
-                        className="button is-warning"
-                      >
-                        <i className="fa-solid fa-cart-shopping"></i>Add to cart
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => removeProduct(productData.id)}
-                        className="button is-danger"
-                      >
-                        <i className="fa-regular fa-trash-can"></i>Remove item
-                      </button>
-                    )}
+                    <button
+                      onClick={() => addProduct(productData)}
+                      className="button is-warning"
+                    >
+                      <i className="fa-solid fa-cart-shopping"></i>Add to cart
+                    </button>
                   </div>
                 </div>
               </div>
-            ) : (
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="card-container column is-2">
+          {/* eslint-disable-next-line react/prop-types */}
+          <div className="card set-hover">
+            <Link
+              to={`/product/${productData.id}/${productData.title}`}
+              state={{ productData }}
+            >
+              <div className="card-image">
+                <figure className="image is-square">
+                  <img src={image} alt="Placeholder image"></img>
+                </figure>
+              </div>
+            </Link>
+
+            <div className="card-content">
+              <div className="media">
+                <div className="media-content">
+                  <p className="title is-6">{title}</p>
+                </div>
+              </div>
               <div className="columns">
                 <div className=" column is-auto is-flex is-justify-content-center is-align-items-center">
                   Quantity: {cantidad}
@@ -81,28 +96,25 @@ function ProductCard({ productData }) {
                 <div className="column is-auto is-flex is-justify-content-center is-align-items-center">
                   <strong>${price}</strong>
                 </div>
-                <div className="column is-auto">
-                  {location.pathname !== "/cart" ? (
-                    <button
-                      onClick={() => addProduct(productData)}
-                      className="button is-warning"
-                    >
-                      <i className="fa-solid fa-cart-arrow-down"></i>Add to cart
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => removeProduct(productData.id)}
-                      className="button is-danger"
-                    >
-                      <i className="mr-2 fa-regular fa-trash-can"></i>Remove item
-                    </button>
-                  )}
-                </div>
               </div>
-            )}
+              <div className="is-flex is-flex-wrap-wrap is-justify-content-center is-align-items-center">
+              <button
+                onClick={() => removeProduct(productData.id)}
+                className="my-1 button is-small is-danger"
+              >
+                <i className="mr-2 fa-regular fa-trash-can"></i>Remove item
+              </button>
+              <button
+                onClick={() => addProduct(productData)}
+                className="button is-small is-success"
+              >
+                <i className="mr-2 fa-regular fa-plus"></i>Add another item
+              </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
