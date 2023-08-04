@@ -8,21 +8,20 @@ export default function LayoutView({ children }) {
   const { state } = useGlobalContext();
   const token = localStorage.getItem("token");
   const logOut = () => {
-    localStorage.removeItem("token")
-    window.location.reload()
-  }
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
   const handleToggleMenu = () => {
-    const navbarBurger = document.querySelector(".navbar-burger")
-    const navbarMenu = document.querySelector("#navbarBasicExample")
-      navbarMenu.classList.toggle("is-active")
-      navbarBurger.classList.toggle("is-active")
-
-  }
+    const navbarBurger = document.querySelector(".navbar-burger");
+    const navbarMenu = document.querySelector("#navbarBasicExample");
+    navbarMenu.classList.toggle("is-active");
+    navbarBurger.classList.toggle("is-active");
+  };
 
   const handleToggleDropdown = () => {
-    const navbarList = document.querySelector("#toggleDropdown")
-    navbarList.classList.toggle("is-hidden")
-  }
+    const navbarList = document.querySelector("#toggleDropdown");
+    navbarList.classList.toggle("is-hidden");
+  };
 
   return (
     <>
@@ -36,7 +35,8 @@ export default function LayoutView({ children }) {
             <div className="mx-4 navbar-brand">
               <Link className="navbar-item" to="/">
                 <strong className="is-size-3 has-text-link">
-                  <i className="mr-2 fa-brands fa-shopware fa-bounce"></i>EAZY SHOP
+                  <i className="mr-2 fa-brands fa-shopware fa-bounce"></i>EAZY
+                  SHOP
                 </strong>
               </Link>
 
@@ -52,7 +52,6 @@ export default function LayoutView({ children }) {
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
               </button>
-              
             </div>
 
             <div id="navbarBasicExample" className="navbar-menu">
@@ -61,12 +60,19 @@ export default function LayoutView({ children }) {
                   Home
                 </Link>
 
-                <Link to="/product" className="navbar-item">Product</Link>
+                <Link to="/product" className="navbar-item">
+                  Product
+                </Link>
 
                 <div className="navbar-item has-dropdown is-hoverable">
-                  <a onClick={handleToggleDropdown} className="navbar-link">Category</a>
+                  <a onClick={handleToggleDropdown} className="navbar-link">
+                    Category
+                  </a>
 
-                  <div id="toggleDropdown" className="is-hidden navbar-dropdown">
+                  <div
+                    id="toggleDropdown"
+                    className="is-hidden navbar-dropdown"
+                  >
                     <Link to="/category/jewelery" className="navbar-item">
                       Jewelry
                     </Link>
@@ -101,26 +107,34 @@ export default function LayoutView({ children }) {
                 </div>
               </div>
               <div className="is-flex is-justify-content-center">
-              <div className="is-flex-wrap-nowrap is-justify-content-center is-align-items-center navbar-item has-dropdown is-hoverable">
-              <div className="is-flex is-justify-content-center is-align-items">
-              <figure className="is-flex is-justify-content-center is-align-items-center mx-2 navbar-item image is-48x48">
-                <img
-                  className="is-rounded"
-                  src="https://cdn-icons-png.flaticon.com/512/3106/3106921.png"
-                />
-              </figure>
-              </div>
-              <div className="navbar-dropdown is-right">
-                <div className="navbar-item">
-                <Link to="/profile" className="navbar-item">Profile</Link>
+                <div className="is-flex-wrap-nowrap is-justify-content-center is-align-items-center navbar-item has-dropdown is-hoverable">
+                  <div className="is-flex is-justify-content-center is-align-items">
+                    <figure className="is-flex is-justify-content-center is-align-items-center mx-2 navbar-item image is-48x48">
+                      <img
+                        className="is-rounded"
+                        src="https://cdn-icons-png.flaticon.com/512/3106/3106921.png"
+                      />
+                    </figure>
+                  </div>
+                  <div className="navbar-dropdown is-right">
+                    <div className="navbar-item">
+                      <Link to="/profile" className="navbar-item">
+                        Profile
+                      </Link>
+                    </div>
+                    <hr className="navbar-divider"></hr>
+                    <div className="navbar-item">
+                      <a
+                        onClick={() => {
+                          logOut();
+                        }}
+                        className=" has-text-black navbar-item"
+                      >
+                        LogOut
+                      </a>
+                    </div>
+                  </div>
                 </div>
-                <hr className="navbar-divider"></hr>
-                <div className="navbar-item">
-                <a onClick={() => {logOut()}} className=" has-text-black navbar-item">LogOut</a>
-
-                </div>
-              </div>
-              </div>
               </div>
             </div>
           </nav>
@@ -134,11 +148,12 @@ export default function LayoutView({ children }) {
             aria-label="main navigation"
           >
             <div className="navbar-brand">
-              <a className="navbar-item" href="/">
+              <Link className="navbar-item" to="/">
                 <strong className="is-size-3 has-text-link">
-                  <i className="fa-brands fa-shopware"></i>EAZY SHOP
+                  <i className="mr-2 fa-brands fa-shopware"></i>EAZY
+                  SHOP
                 </strong>
-              </a>
+              </Link>
 
               <button
                 role="button"
@@ -160,10 +175,14 @@ export default function LayoutView({ children }) {
                   Home
                 </Link>
 
-                <Link to="/product" className="navbar-item">Product</Link>
+                <Link to="/product" className="navbar-item">
+                  Product
+                </Link>
 
                 <div className="navbar-item has-dropdown is-hoverable">
-                  <a onClick={handleToggleDropdown} className="navbar-link">Category</a>
+                  <a onClick={handleToggleDropdown} className="navbar-link">
+                    Category
+                  </a>
 
                   <div id="toggleDropdown" className="navbar-dropdown">
                     <Link to="/category/jewelery" className="navbar-item">
@@ -196,7 +215,7 @@ export default function LayoutView({ children }) {
                       <div className="mr-3">{state.products.length}</div>
                       <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
-                    <Link to="/signup"className="button is-link">
+                    <Link to="/signup" className="button is-link">
                       <strong>SignUp</strong>
                     </Link>
                     <Link to="/login" className="button is-light">
