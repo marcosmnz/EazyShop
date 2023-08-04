@@ -146,8 +146,21 @@ import {
       });
     }
     const deleteAllProducts = () => {
+      toast.error('😭 Se eliminó todo el carrito!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       dispatch({
         type: 'DELETE_ALL_PRODUCTS',
+      });
+      dispatch({
+        type: 'CALCULATE_TOTAL_PRICE',
       });
     };
   

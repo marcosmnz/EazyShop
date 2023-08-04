@@ -27,7 +27,7 @@ function ProductCard({ productData }) {
         theme="light"
       />
       {location.pathname !== "/cart" ? (
-        <div className="card-container column is-3">
+        <div className="card-container column is-12-mobile is-6-tablet is-4-desktop is-3-widescreen">
           {/* eslint-disable-next-line react/prop-types */}
           <div className="card set-hover">
             <Link
@@ -44,15 +44,17 @@ function ProductCard({ productData }) {
             <div className="card-content">
               <div className="media">
                 <div className="media-content">
-                  <p className="title is-4">{title}</p>
+                  <p className="card-title title is-4">{title}</p>
                 </div>
               </div>
               <div className="content">
+                <div className="card-text">
                 {description}
+                  </div>
                 <br></br>
                 <br></br>
-                <div className="columns">
-                  <div className="column is-half is-flex is-justify-content-center is-align-items-center">
+                <div className="is-flex columns">
+                  <div className=" my-0 content column is-half is-flex is-justify-content-center is-align-items-center">
                     <strong>${price}</strong>
                   </div>
                   <div className="column is-half">
@@ -69,7 +71,7 @@ function ProductCard({ productData }) {
           </div>
         </div>
       ) : (
-        <div className="card-container column is-2">
+        <div className="card-container column is-12-mobile is-6-tablet is-4-desktop is-3-widescreen">
           {/* eslint-disable-next-line react/prop-types */}
           <div className="card set-hover">
             <Link

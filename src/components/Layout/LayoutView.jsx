@@ -11,6 +11,18 @@ export default function LayoutView({ children }) {
     localStorage.removeItem("token")
     window.location.reload()
   }
+  const handleToggleMenu = () => {
+    const navbarBurger = document.querySelector(".navbar-burger")
+    const navbarMenu = document.querySelector("#navbarBasicExample")
+      navbarMenu.classList.toggle("is-active")
+      navbarBurger.classList.toggle("is-active")
+
+  }
+
+  const handleToggleDropdown = () => {
+    const navbarList = document.querySelector("#toggleDropdown")
+    navbarList.classList.toggle("is-hidden")
+  }
 
   return (
     <>
@@ -22,23 +34,25 @@ export default function LayoutView({ children }) {
             aria-label="main navigation"
           >
             <div className="mx-4 navbar-brand">
-              <a className="navbar-item" href="/">
+              <Link className="navbar-item" to="/">
                 <strong className="is-size-3 has-text-link">
-                  <i className="fa-brands fa-shopware"></i>EAZY SHOP
+                  <i className="mr-2 fa-brands fa-shopware fa-bounce"></i>EAZY SHOP
                 </strong>
-              </a>
+              </Link>
 
-              <a
+              <button
                 role="button"
                 className="navbar-burger"
                 aria-label="menu"
                 aria-expanded="false"
                 data-target="navbarBasicExample"
+                onClick={handleToggleMenu}
               >
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
-              </a>
+              </button>
+              
             </div>
 
             <div id="navbarBasicExample" className="navbar-menu">
@@ -47,12 +61,12 @@ export default function LayoutView({ children }) {
                   Home
                 </Link>
 
-                <a className="navbar-item">Product</a>
+                <Link to="/product" className="navbar-item">Product</Link>
 
                 <div className="navbar-item has-dropdown is-hoverable">
-                  <a className="navbar-link">Category</a>
+                  <a onClick={handleToggleDropdown} className="navbar-link">Category</a>
 
-                  <div className="navbar-dropdown">
+                  <div id="toggleDropdown" className="is-hidden navbar-dropdown">
                     <Link to="/category/jewelery" className="navbar-item">
                       Jewelry
                     </Link>
@@ -78,7 +92,7 @@ export default function LayoutView({ children }) {
 
               <div className="navbar-end">
                 <div className="navbar-item">
-                  <div className="buttons">
+                  <div className="buttons is-flex is-justify-content-center is-align-items-center">
                     <Link to="/cart" className="button is-rounded is-light">
                       <div className="mr-3">{state.products.length}</div>
                       <i className="fa-solid fa-cart-shopping"></i>
@@ -86,17 +100,26 @@ export default function LayoutView({ children }) {
                   </div>
                 </div>
               </div>
-              <div className="is-flex is-justify-content-center is-align-items-center navbar-item has-dropdown is-hoverable">
-              <figure className="navbar-item mr-5 image is-48x48">
+              <div className="is-flex is-justify-content-center">
+              <div className="is-flex-wrap-nowrap is-justify-content-center is-align-items-center navbar-item has-dropdown is-hoverable">
+              <div className="is-flex is-justify-content-center is-align-items">
+              <figure className="is-flex is-justify-content-center is-align-items-center mx-2 navbar-item image is-48x48">
                 <img
                   className="is-rounded"
                   src="https://cdn-icons-png.flaticon.com/512/3106/3106921.png"
                 />
               </figure>
+              </div>
               <div className="navbar-dropdown is-right">
+                <div className="navbar-item">
                 <Link to="/profile" className="navbar-item">Profile</Link>
+                </div>
                 <hr className="navbar-divider"></hr>
-                <a onClick={() => {logOut()}} className="navbar-item">LogOut</a>
+                <div className="navbar-item">
+                <a onClick={() => {logOut()}} className=" has-text-black navbar-item">LogOut</a>
+
+                </div>
+              </div>
               </div>
               </div>
             </div>
@@ -117,31 +140,32 @@ export default function LayoutView({ children }) {
                 </strong>
               </a>
 
-              <a
+              <button
                 role="button"
                 className="navbar-burger"
                 aria-label="menu"
-                aria-expanded="false"
+                aria-expanded="true"
                 data-target="navbarBasicExample"
+                onClick={handleToggleMenu}
               >
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
-              </a>
+              </button>
             </div>
 
             <div id="navbarBasicExample" className="navbar-menu">
               <div className="navbar-start">
-                <a className="navbar-item" href="/home">
+                <Link className="navbar-item" to="/home">
                   Home
-                </a>
+                </Link>
 
-                <a className="navbar-item">Product</a>
+                <Link to="/product" className="navbar-item">Product</Link>
 
                 <div className="navbar-item has-dropdown is-hoverable">
-                  <a className="navbar-link">Category</a>
+                  <a onClick={handleToggleDropdown} className="navbar-link">Category</a>
 
-                  <div className="navbar-dropdown">
+                  <div id="toggleDropdown" className="navbar-dropdown">
                     <Link to="/category/jewelery" className="navbar-item">
                       Jewelry
                     </Link>
@@ -172,12 +196,12 @@ export default function LayoutView({ children }) {
                       <div className="mr-3">{state.products.length}</div>
                       <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
-                    <a className="button is-link">
+                    <Link to="/signup"className="button is-link">
                       <strong>SignUp</strong>
-                    </a>
-                    <a href="/login" className="button is-light">
+                    </Link>
+                    <Link to="/login" className="button is-light">
                       Log in
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

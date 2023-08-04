@@ -12,6 +12,8 @@ import Login from "./View/Login/index";
 import DashboardJewelery from "./components/Categories/JewelryCat.jsx";
 import ContextGlobalProvider from "./Context/ContextGlobal";
 import Reports from "./View/Reports.jsx";
+import ComingSoon from "./View/ComingSoon.jsx";
+import Footer from "./View/Footer.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,11 +21,13 @@ const router = createBrowserRouter([
     element: (
       <LayoutView>
         <App />
+        <Footer/>
       </LayoutView>
     ),
     errorElement: (
       <LayoutView>
         <ErrorPage />
+        <Footer/>
       </LayoutView>
     ),
   },
@@ -32,11 +36,13 @@ const router = createBrowserRouter([
     element: (
       <LayoutView>
         <App />
+        <Footer/>
       </LayoutView>
     ),
     errorElement: (
       <LayoutView>
         <ErrorPage />
+        <Footer/>
       </LayoutView>
     ),
   },
@@ -44,7 +50,8 @@ const router = createBrowserRouter([
     path: "/product/:id/:name",
     element: (
       <LayoutView>
-        <ProductDetail />,
+        <ProductDetail />
+        <Footer/>
       </LayoutView>
     ),
   },
@@ -54,6 +61,7 @@ const router = createBrowserRouter([
       <PrivateRoute>
         <LayoutView>
           <CartPage />
+        <Footer/>
         </LayoutView>
       </PrivateRoute>
     ),
@@ -63,6 +71,7 @@ const router = createBrowserRouter([
     element: (
       <LayoutView>
         <Login />
+        <Footer/>
       </LayoutView>
     ),
   },
@@ -71,6 +80,7 @@ const router = createBrowserRouter([
     element: (
       <LayoutView>
         <DashboardJewelery />
+        <Footer/>
       </LayoutView>
     ),
   },
@@ -79,9 +89,37 @@ const router = createBrowserRouter([
     element: (
       <LayoutView>
         <Reports />
+        <Footer/>
       </LayoutView>
     ),
   },
+  {
+    path: "/signup",
+    element: (
+      <LayoutView>
+        <ComingSoon/>
+        <Footer/>
+      </LayoutView>
+    )
+  },
+  {
+    path: "/product",
+    element: (
+      <LayoutView>
+        <ComingSoon/>
+        <Footer/>
+      </LayoutView>
+    )
+  },
+  {
+    path: "/profile",
+    element: (
+      <LayoutView>
+        <ComingSoon/>
+        <Footer/>
+      </LayoutView>
+    )
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
