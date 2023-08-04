@@ -26,4 +26,4 @@ Some **info** that you will need to see your cart:
 Links of the creator and the deployed project:
 
 - [EazyShop](http://eazyshop.netlify.app)
-- [Github of creator](http://eazyshop.netlify.app)
+- [Github of creator](https://github.com/marcosmnz)
