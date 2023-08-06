@@ -35,9 +35,11 @@ function ProductCard({ productData }) {
               state={{ productData }}
             >
               <div className="card-image">
+              <div className="card-img">
                 <figure className="image is-square">
-                  <img src={image} alt="Placeholder image"></img>
+                  <img src={image} alt={productData.title}></img>
                 </figure>
+              </div>
               </div>
             </Link>
 

@@ -1,3 +1,36 @@
 .card-content {
 max-width: 100%;
 }
+.card-image {
+    min-width: 20vw;
+}
+
+@media (min-width: 60px) {
+    .button-cart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        scale: 0.7;
+    }
+  }
+
+@media (min-width: 499px) {
+    .card-image {
+        min-width: 30vh;
+    }
+  }
+
+  @media (min-width: 615px) and (max-width: 819px) {
+    .card-image {
+        min-width: 40vh;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .card-image {
+        min-width: 20vh;
+    }
+  }

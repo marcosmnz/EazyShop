@@ -28,7 +28,7 @@ function ProductDetailView({ data, addProduct}) {
             </figure>
           </div>
         </div>
-        <div className="card-content column is-flex is-flex-flex-wrap">
+        <div className="card-content column is-flex is-flex-mobile is-flex-flex-wrap">
           <div className="card-content">
             <div className="media">
               <div className="media-content">
@@ -40,7 +40,7 @@ function ProductDetailView({ data, addProduct}) {
               <div className="">
               {data.description}
               </div>
-              <div className="columns is-flex is-flex-wrap-wrap mt-6 pt-6">
+              <div className="columns button-cart is-flex is-flex-wrap-wrap mt-6 pt-6">
                   <div className="column m-2 is-flex is-justify-content-center is-align-items-center">
                     <strong className="is-size-3">${data.price}</strong>
                   </div>
